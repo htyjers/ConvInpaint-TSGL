@@ -68,13 +68,10 @@ Our model is trained on the irregular mask dataset provided by [Liu et al](https
 
 ## 3. Train
 ### Dataset Path
-
 * RTV data path: 
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/train/run_train.py#L9
-
 * RGB data path: Following the file tree structure, the training and testing code will automatically read the desired RGB images.
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/train/dataset_loader.py#L21-L23
-  
 * Mask data path:
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/train/run_train.py#L10
   
@@ -85,15 +82,20 @@ Python3 TSGL_MEDFE/train/run_train.py
 
 ## 4. Test
 ### Dataset Path
-
 * RTV data path: 
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/test/run_train.py#L9
-
 * RGB data path: Following the file tree structure, the training and testing code will automatically read the desired RGB images.
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/test/dataset_loader.py#L21-L23
-  
 * Mask data path:
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/test/run_train.py#L10
+
+### Pre-trained models:
+* Download the pre-trained model
+	- [Places2](https://pan.baidu.com/s/1bdHcIzxThLc79Fk665kokg?pwd=j39f)
+	- [CelebA](https://pan.baidu.com/s/1bwEcRABf03vPry8ZsZtUFg?pwd=pb7a)
+	- [PSV](https://pan.baidu.com/s/1N0zIn3GGJwtg69PAY_PobQ?pwd=bjp4)
+* pre-trained model path
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/bb07abda12b364d6d0460d27e1cc78d29093233b/TSGL_MEDFE/test/test.py#L50
   
 ### Run the following command
 ```
@@ -108,6 +110,7 @@ This implementation is based on / inspired by:
 
 <details open>
 <summary><h1>⭐️ [TSGL]LaMa (For 512 * 512)</h1></summary>
+
 
 
 </details>
