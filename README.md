@@ -6,7 +6,7 @@ This repository is the official code for the paper "Thinking inside the Convolut
 ## For convenience, I wrote independent code for each model.
 
 <details open>
-<summary><h1>⭐️ [TSGL]-MEDFE (For 256 * 256)</h1></summary>
+<summary><h1>⭐️ TSGL(MEDFE) [For 256 * 256]</h1></summary>
 
 ## 1. Dependencies
 * OS: Ubuntu 20.04.6
@@ -15,14 +15,14 @@ This repository is the official code for the paper "Thinking inside the Convolut
 	- cudnn: 8.5.0
 * python3
 * pytorch >= 1.13.0
-* Python packages: `pip install -r requirements.txt`
+* Python packages: `pip install -r TSGL_MEDFE/requirements.txt`
 
 ## 2. Dataset Preparation
 ### Image Dataset -- [RGB Image]
 Our model is trained on the three typical datasets: 
   * Paris Street View
   * CelebA
-  * Places2
+  * Places2 (512 * 512)
 ### Structure Dataset -- [Edge Map]
 We employ the canny edge detector to construct the edge map and the grayscale counterpart. **The training and testing code already includes this part.**
   ```
@@ -102,16 +102,45 @@ Python3 TSGL_MEDFE/train/run_train.py
 Python3 TSGL_MEDFE/test/run_train.py
 ```
 
-#
+## 5. Acknowledgments
 This implementation is based on / inspired by:
+* [https://github.com/NVlabs/SPADE](https://github.com/NVlabs/SPADE) (SPADE)
+* [https://github.com/fenglinglwb/MAT](https://github.com/fenglinglwb/MAT) (MAT)
 * [https://github.com/KumapowerLIU/Rethinking-Inpainting-MEDFE](https://github.com/KumapowerLIU/Rethinking-Inpainting-MEDFE) (MEDFE)
 
 </details>
 
 <details open>
-<summary><h1>⭐️ [TSGL]LaMa (For 512 * 512)</h1></summary>
+<summary><h1>⭐️ TSGL(LaMa) [For 512 * 512]</h1></summary>
 
+## 1. Dependencies
+* OS: Ubuntu 20.04.6
+* nvidia :
+	- cuda: 12.3
+	- cudnn: 8.5.0
+* python3
+* pytorch >= 1.13.0
+* Python packages: `pip install -r TSGL_Lama/requirements.txt`
 
+## 2. Dataset Preparation
+### Image Dataset -- [RGB Image]
+Our model is trained on the three typical datasets: 
+  * Places2 (512 * 512)
+### Structure Dataset -- [Edge Map]
+We employ the canny edge detector to construct the edge map and the grayscale counterpart. **The training and testing code already includes this part.**
+  ```
+  from skimage.feature import canny
+  from skimage.color import gray2rgb, rgb2gray
+  
+  gray_image = rgb2gray(np.array(tensor_to_image()(image)))
+  edge = image_to_tensor()(Image.fromarray(canny(gray_image, sigma=sigma)))
+  gray_image = image_to_tensor()(Image.fromarray(gray_image))
+  ```
+
+### Mask Dataset -- [Lama Mask Dataset]
+Our model is trained on the lama mask dataset provided by [LaMa](https://arxiv.org/abs/2109.07161). You can create the mask dataset from their [website](http://masc.cs.gmu.edu/wiki/partialconv).
+
+### The File Tree Structure
 
 </details>
 
