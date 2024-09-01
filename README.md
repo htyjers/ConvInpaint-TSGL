@@ -70,14 +70,39 @@ Our model is trained on the irregular mask dataset provided by [Liu et al](https
 ### Dataset Path
 
 * RTV data path: 
-  
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/train/run_train.py#L9
+
 * RGB data path: Following the file tree structure, the training and testing code will automatically read the desired RGB images.
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/train/dataset_loader.py#L21-L23
   
-* Mask data path: 
+* Mask data path:
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/train/run_train.py#L10
   
 ### Run the following command
+```
+Python3 TSGL_MEDFE/train/run_train.py
+```
 
 ## 4. Test
+### Dataset Path
+
+* RTV data path: 
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/test/run_train.py#L9
+
+* RGB data path: Following the file tree structure, the training and testing code will automatically read the desired RGB images.
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/test/dataset_loader.py#L21-L23
+  
+* Mask data path:
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/test/run_train.py#L10
+  
+### Run the following command
+```
+Python3 TSGL_MEDFE/test/run_train.py
+```
+
+#
+This implementation is based on / inspired by:
+* [https://github.com/KumapowerLIU/Rethinking-Inpainting-MEDFE](https://github.com/KumapowerLIU/Rethinking-Inpainting-MEDFE) (MEDFE)
 
 </details>
 
