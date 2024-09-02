@@ -20,9 +20,10 @@ This repository is the official code for the paper "Thinking inside the Convolut
 ## 2. Dataset Preparation
 ### Image Dataset -- [RGB Image]
 Our model is trained on the three typical datasets: 
-  * Paris Street View
-  * CelebA
-  * Places2 (512 * 512)
+  * [Paris Street View](https://github.com/pathak22/context-encoder)
+  * [CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)
+  * [Places2 (256 * 256)](http://places2.csail.mit.edu/)
+
 ### Structure Dataset -- [Edge Map]
 We employ the canny edge detector to construct the edge map and the grayscale counterpart. **The training and testing code already includes this part.**
   ```
@@ -41,7 +42,7 @@ generate_structure_images("path to RGB image dataset root", "path to output RTV 
 ```
 
 ### Mask Dataset -- [Irregular Mask Dataset]
-Our model is trained on the irregular mask dataset provided by [Liu et al](https://arxiv.org/abs/1804.07723). You can download publically available Irregular Mask Dataset from their [website](http://masc.cs.gmu.edu/wiki/partialconv).
+Our model is trained on the irregular mask dataset provided by [PartialConv](https://arxiv.org/abs/1804.07723). You can download publically available Irregular Mask Dataset from their [website](http://masc.cs.gmu.edu/wiki/partialconv).
 
 ### The File Tree Structure
 ```
@@ -82,14 +83,14 @@ Python3 TSGL_MEDFE/train/run_train.py
 
 ## 4. Test
 ### Dataset Path
-* RTV data path: 
+* RTV data path
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/test/run_train.py#L9
 * RGB data path: Following the file tree structure, the training and testing code will automatically read the desired RGB images.
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/test/dataset_loader.py#L21-L23
-* Mask data path:
+* Mask data path
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/test/run_train.py#L10
 
-### Pre-trained models:
+### Pre-trained models
 * Download the pre-trained model
 	- [Places2](https://pan.baidu.com/s/1bdHcIzxThLc79Fk665kokg?pwd=j39f)
 	- [CelebA](https://pan.baidu.com/s/1bwEcRABf03vPry8ZsZtUFg?pwd=pb7a)
@@ -125,7 +126,7 @@ This implementation is based on / inspired by:
 ## 2. Dataset Preparation
 ### Image Dataset -- [RGB Image]
 Our model is trained on one dataset: 
-  * Places2 (512 * 512)
+  * [Places2 (512 * 512)](http://places2.csail.mit.edu/)
 ### Structure Dataset -- [Edge Map]
 We employ the canny edge detector to construct the edge map and the grayscale counterpart. **The training and testing code already includes this part.**
   ```
@@ -158,8 +159,10 @@ Our model is trained on the lama mask dataset provided by [LaMa](https://arxiv.o
 
 ## 3. Train
 ### Dataset Path
-* RGB data path: 
-* Mask data path:
+* RGB data path
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/train/run_train.py#L9
+* Mask data path
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/train/run_train.py#L10
   
 ### Run the following command
 ```
@@ -168,15 +171,16 @@ Python3 TSGL_Lama/train/run_train.py
 
 ## 4. Test
 ### Dataset Path
-* RGB data path:
-* Mask data path:
+* RGB data path
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/test/run_train.py#L9
+* Mask data path
+  https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/test/run_train.py#L10
 
-### Pre-trained models:
+### Pre-trained model
 * Download the pre-trained model
 	- [Places2]()
-
 * pre-trained model path
-
+https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/test/test.py#L43
   
 ### Run the following command
 ```
