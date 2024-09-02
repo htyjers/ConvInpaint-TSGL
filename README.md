@@ -199,7 +199,7 @@ Python3 TSGL_Lama/train/run_train.py
 
 ### Pre-trained model
 * Download the pre-trained model
-	- [Places2]()
+	- [Places2](): Trained on Places365-Standard Test Dataset
 * pre-trained model path
 https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/test/test.py#L43
   
