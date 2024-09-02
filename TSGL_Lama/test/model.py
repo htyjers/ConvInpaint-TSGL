@@ -692,7 +692,7 @@ class FFCResNetGenerator(BaseNetwork):
         input_low_4_g = self.h2l_4_g(input_low_4_g, input_low_high_4_ls[1], input_high_4_g)
         #
 
-        return self.model((input_low_4_l, input_low_4_g)), self.up_high((input_high_4_l, input_high_4_g))
+        return self.model((input_low_4_l, input_low_4_g))
 
 
 # Defines the PatchGAN discriminator with the specified arguments.
