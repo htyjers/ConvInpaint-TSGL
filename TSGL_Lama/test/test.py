@@ -58,7 +58,7 @@ class Trainer(object):
                     mask = next(mask_iterator).to(self.args.device)
 
                 with torch.no_grad():
-                    output,high1= self.netG(image * mask, high * mask, gray * mask, 1-mask) #,high1
+                    output= self.netG(image * mask, high * mask, gray * mask, 1-mask)
                     img = (image * mask + output * (1 - mask)) * 255
                     img = img.permute(0, 2, 3, 1).int().cpu().numpy()
                     cv2.imwrite(self.save_path+'/{}_f.jpg'.format(i), img[0, :, :, ::-1])
