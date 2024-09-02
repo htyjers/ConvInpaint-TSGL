@@ -1,13 +1,27 @@
 # ConvInpaint-TSGL
+### [Paper]() | [BibTex](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#citation)
 
 This repository is the official code for the paper "Thinking inside the Convolution for Image Inpainting: Reconstructing Texture via Structure under Global and Local Side" by Haipeng Liu (hpliu_hfut@hotmail.com), Yang Wang (corresponding author: yangwang@hfut.edu.cn), Biao Qian, Meng Wang, Yong Rui. 
 
+## 📚 Table of Contents
 
-## For convenience, I wrote independent code for each model.
+- [📖 Introduction](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#introduction)
+- [🔧 TSGL (MEDFE)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#%EF%B8%8F-tsglmedfe-for-256--256)
+- [🔨 TSGL (LaMa)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#%EF%B8%8F-tsgllama-for-512--512)
+- [📊 Experimental Results](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#experimental-results)
+- [🔖 Citation](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#citation)
+
 
 <details open>
-<summary><h1>⭐️ TSGL(MEDFE) [For 256 * 256]</h1></summary>
+<summary><h1>📖 Introduction</h1></summary>
 
+</details>
+
+
+<details open>
+<summary><h1>🔧 TSGL(MEDFE) [For 256 * 256]</h1></summary>
+For convenience, I wrote independent code for each model.
+	
 ## 1. Dependencies
 * OS: Ubuntu 20.04.6
 * nvidia :
@@ -112,8 +126,9 @@ This implementation is based on / inspired by:
 </details>
 
 <details open>
-<summary><h1>⭐️ TSGL(LaMa) [For 512 * 512]</h1></summary>
-
+<summary><h1>🔨 TSGL(LaMa) [For 512 * 512]</h1></summary>
+For convenience, I wrote independent code for each model.
+	
 ## 1. Dependencies
 * OS: Ubuntu 20.04.6
 * nvidia :
@@ -196,7 +211,11 @@ This implementation is based on / inspired by:
 
 
 <details open>
-<summary><h1>Experimental Results</h1></summary>
+<summary><h1>📊 Experimental Results</h1></summary>
 
 </details>
 
+<details open>
+<summary><h1>🔖 Citation</h1></summary>
+
+</details>
