@@ -124,7 +124,7 @@ This implementation is based on / inspired by:
 
 ## 2. Dataset Preparation
 ### Image Dataset -- [RGB Image]
-Our model is trained on the three typical datasets: 
+Our model is trained on one dataset: 
   * Places2 (512 * 512)
 ### Structure Dataset -- [Edge Map]
 We employ the canny edge detector to construct the edge map and the grayscale counterpart. **The training and testing code already includes this part.**
@@ -138,9 +138,15 @@ We employ the canny edge detector to construct the edge map and the grayscale co
   ```
 
 ### Mask Dataset -- [Lama Mask Dataset]
-Our model is trained on the lama mask dataset provided by [LaMa](https://arxiv.org/abs/2109.07161). You can create the mask dataset from their [website](http://masc.cs.gmu.edu/wiki/partialconv).
+Our model is trained on the lama mask dataset provided by [LaMa](https://arxiv.org/abs/2109.07161). You can create the mask dataset from their [website](https://github.com/advimman/lama?tab=readme-ov-file).
 
 ### The File Tree Structure
+
+</details>
+
+
+<details open>
+<summary><h1>Experimental Results</h1></summary>
 
 </details>
 
