@@ -6,8 +6,8 @@ This repository is the official code for the paper "Thinking inside the Convolut
 ## 📚 Table of Contents
 
 - [📖 Introduction](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-introduction)
-- [🔧 TSGL (MEDFE)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#%EF%B8%8F-tsglmedfe-for-256--256)
-- [🔨 TSGL (LaMa)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#%EF%B8%8F-tsgllama-for-512--512)
+- [🔧 TSGL (MEDFE)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsglmedfe-for-256--256)
+- [🔨 TSGL (LaMa)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsgllama-for-512--512)
 - [📊 Experimental Results](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-experimental-results)
 - [🔖 Citation](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-citation)
 
