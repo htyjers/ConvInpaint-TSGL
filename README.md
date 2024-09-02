@@ -29,7 +29,10 @@ For convenience, I wrote independent code for each model.
 	- cudnn: 8.5.0
 * python3
 * pytorch >= 1.13.0
-* Python packages: `pip install -r TSGL_MEDFE/requirements.txt`
+* Python packages:
+  ```bash
+  pip install -r TSGL_MEDFE/requirements.txt
+  ```
 
 ## 2. Dataset Preparation
 ### Image Dataset -- [RGB Image]
@@ -40,7 +43,7 @@ Our model is trained on the three typical datasets:
 
 ### Structure Dataset -- [Edge Map]
 We employ the canny edge detector to construct the edge map and the grayscale counterpart. **The training and testing code already includes this part.**
-  ```
+  ```python
   from skimage.feature import canny
   from skimage.color import gray2rgb, rgb2gray
   
@@ -51,7 +54,7 @@ We employ the canny edge detector to construct the edge map and the grayscale co
 
 ### Texture Dataset -- [RTV Image]
 For RTV image, we utlize the [RTV smooth method](http://www.cse.cuhk.edu.hk/~leojia/projects/texturesep/). Run generation function [data/Matlab/generate_structre_images.m](./data/Matlab/generate_structure_images.m) in your matlab. For example, if you want to generate smooth images for **RGB Image**, you can run the following code:
-```
+```matlab
 generate_structure_images("path to RGB image dataset root", "path to output RTV image folder");
 ```
 
@@ -59,7 +62,7 @@ generate_structure_images("path to RGB image dataset root", "path to output RTV 
 Our model is trained on the irregular mask dataset provided by [PartialConv](https://arxiv.org/abs/1804.07723). You can download publically available Irregular Mask Dataset from their [website](http://masc.cs.gmu.edu/wiki/partialconv).
 
 ### The File Tree Structure
-```
+```bash
 📂 YourDatasetPath
 ├── 📁 RGB (Strictly adhere to this naming; do not change.)
 │   ├── 📁 Train
@@ -91,7 +94,7 @@ Our model is trained on the irregular mask dataset provided by [PartialConv](htt
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/train/run_train.py#L10
   
 ### Run the following command
-```
+```python
 Python3 TSGL_MEDFE/train/run_train.py
 ```
 
@@ -113,7 +116,7 @@ Python3 TSGL_MEDFE/train/run_train.py
   https://github.com/htyjers/ConvInpaint-TSGL/blob/bb07abda12b364d6d0460d27e1cc78d29093233b/TSGL_MEDFE/test/test.py#L50
   
 ### Run the following command
-```
+```python
 Python3 TSGL_MEDFE/test/run_train.py
 ```
 
@@ -136,15 +139,18 @@ For convenience, I wrote independent code for each model.
 	- cudnn: 8.5.0
 * python3
 * pytorch >= 1.13.0
-* Python packages: `pip install -r TSGL_Lama/requirements.txt`
-
+* Python packages: 
+  ```bash
+  pip install -r TSGL_Lama/requirements.txt
+  ```
+  
 ## 2. Dataset Preparation
 ### Image Dataset -- [RGB Image]
 Our model is trained on one dataset: 
   * [Places2 (512 * 512)](http://places2.csail.mit.edu/)
 ### Structure Dataset -- [Edge Map]
 We employ the canny edge detector to construct the edge map and the grayscale counterpart. **The training and testing code already includes this part.**
-  ```
+  ```python
   from skimage.feature import canny
   from skimage.color import gray2rgb, rgb2gray
   
@@ -157,7 +163,7 @@ Our model is trained on the lama mask dataset provided by [LaMa](https://arxiv.o
 
 ### The File Tree Structure
 * Since the RTV smooth method is time-consuming for processing RGB images, especially for a 512x512 image, we substitute it with the RGB image.
-```
+```bash
 📂 YourDatasetPath
 ├── 📁 RGB
 │   ├── 📁 Train
@@ -180,7 +186,7 @@ Our model is trained on the lama mask dataset provided by [LaMa](https://arxiv.o
   https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/train/run_train.py#L10
   
 ### Run the following command
-```
+```python
 Python3 TSGL_Lama/train/run_train.py
 ```
 
@@ -198,7 +204,7 @@ Python3 TSGL_Lama/train/run_train.py
 https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/test/test.py#L43
   
 ### Run the following command
-```
+```python
 Python3 TSGL_Lama/test/run_train.py
 ```
 
