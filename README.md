@@ -35,7 +35,7 @@ We employ the canny edge detector to construct the edge map and the grayscale co
   ```
 
 ### Texture Dataset -- [RTV Image]
-For RTV image, we utlize the [RTV smooth method](http://www.cse.cuhk.edu.hk/~leojia/projects/texturesep/).Run generation function [data/Matlab/generate_structre_images.m](./data/Matlab/generate_structure_images.m) in your matlab. For example, if you want to generate smooth images for **RGB Image**, you can run the following code:
+For RTV image, we utlize the [RTV smooth method](http://www.cse.cuhk.edu.hk/~leojia/projects/texturesep/). Run generation function [data/Matlab/generate_structre_images.m](./data/Matlab/generate_structure_images.m) in your matlab. For example, if you want to generate smooth images for **RGB Image**, you can run the following code:
 ```
 generate_structure_images("path to RGB image dataset root", "path to output RTV image folder");
 ```
@@ -136,12 +136,58 @@ We employ the canny edge detector to construct the edge map and the grayscale co
   edge = image_to_tensor()(Image.fromarray(canny(gray_image, sigma=sigma)))
   gray_image = image_to_tensor()(Image.fromarray(gray_image))
   ```
-
 ### Mask Dataset -- [Lama Mask Dataset]
 Our model is trained on the lama mask dataset provided by [LaMa](https://arxiv.org/abs/2109.07161). You can create the mask dataset from their [website](https://github.com/advimman/lama?tab=readme-ov-file).
 
 ### The File Tree Structure
+* Since the RTV smooth method is time-consuming for processing RGB images, especially for a 512x512 image, we substitute it with the RGB image.
+```
+📂 YourDatasetPath
+├── 📁 RGB
+│   ├── 📁 Train
+│   │   ├── 🖼 image1.jpg
+│   │   ├── 🖼 image2.jpg
+│   ├── 📁 Test
+│   │   ├── 🖼 image3.jpg
+│   │   ├── 🖼 image4.jpg
+├── 📁 Mask
+│   ├── 🖼 00000.jpg
+│   ├── 🖼 00001.jpg
+└── ...
+```
 
+## 3. Train
+### Dataset Path
+* RGB data path: 
+* Mask data path:
+  
+### Run the following command
+```
+Python3 TSGL_Lama/train/run_train.py
+```
+
+## 4. Test
+### Dataset Path
+* RGB data path:
+* Mask data path:
+
+### Pre-trained models:
+* Download the pre-trained model
+	- [Places2]()
+
+* pre-trained model path
+
+  
+### Run the following command
+```
+Python3 TSGL_Lama/test/run_train.py
+```
+
+## 5. Acknowledgments
+This implementation is based on / inspired by:
+* [https://github.com/NVlabs/SPADE](https://github.com/NVlabs/SPADE) (SPADE)
+* [https://github.com/advimman/lama?tab=readme-ov-file](https://github.com/advimman/lama?tab=readme-ov-file) (LaMa)
+  
 </details>
 
 
