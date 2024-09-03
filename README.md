@@ -12,7 +12,7 @@ This repository is the official code for the paper "Thinking inside the Convolut
 - [🔖 Citation](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-citation)
 
 
-<details open>
+<details close>
 <summary><h1>📖 Introduction</h1></summary>
 
 </details>
@@ -109,9 +109,9 @@ Python3 TSGL_MEDFE/train/run_train.py
 
 ### Pre-trained models
 * Download the pre-trained model
-	- [Places2](https://pan.baidu.com/s/1bdHcIzxThLc79Fk665kokg?pwd=j39f)
-	- [CelebA](https://pan.baidu.com/s/1bwEcRABf03vPry8ZsZtUFg?pwd=pb7a)
-	- [PSV](https://pan.baidu.com/s/1N0zIn3GGJwtg69PAY_PobQ?pwd=bjp4)
+	- [Places2]()
+	- [CelebA]()
+	- [PSV]()
 * pre-trained model path
   https://github.com/htyjers/ConvInpaint-TSGL/blob/bb07abda12b364d6d0460d27e1cc78d29093233b/TSGL_MEDFE/test/test.py#L50
   
