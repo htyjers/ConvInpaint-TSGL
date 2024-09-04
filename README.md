@@ -223,7 +223,7 @@ This implementation is based on / inspired by:
 ![](pic/tau.png)
 	
 * Ablation study about comparing the final inpainted results using various priors on ADE20K with irregular masks reveals that our **Edge map + Grayscale** approach yields the most desirable inpainting results compared to other methods.
-![](pic/prior.png)
+![](pic/prior_fig.png)
 
 *  Ablation study about several priors as the structure information on ADE20K dataset. Our method, i.e., **Edge map + Grayscale**, achieves the best results (reported with boldface).
 ![](pic/prior_table.png)
