@@ -109,9 +109,9 @@ Python3 TSGL_MEDFE/train/run_train.py
 
 ### Pre-trained models
 * Download the pre-trained model
-	- [Places2]()
-	- [CelebA]()
-	- [PSV]()
+	- [Places2](https://pan.baidu.com/s/18yHf01_hHI6Nu7BnlDSQ9w?pwd=6v9k)
+	- [CelebA](https://pan.baidu.com/s/18yHf01_hHI6Nu7BnlDSQ9w?pwd=6v9k)
+	- [PSV](https://pan.baidu.com/s/18yHf01_hHI6Nu7BnlDSQ9w?pwd=6v9k)
 * pre-trained model path
   https://github.com/htyjers/ConvInpaint-TSGL/blob/bb07abda12b364d6d0460d27e1cc78d29093233b/TSGL_MEDFE/test/test.py#L50
   
@@ -199,7 +199,7 @@ Python3 TSGL_Lama/train/run_train.py
 
 ### Pre-trained model
 * Download the pre-trained model
-	- [Places2](): Trained on Places365-Standard Test Dataset
+	- [Places2](https://pan.baidu.com/s/18yHf01_hHI6Nu7BnlDSQ9w?pwd=6v9k): Trained on Places365-Standard Test Dataset
 * pre-trained model path
 https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/test/test.py#L43
   
