@@ -1,15 +1,15 @@
 # ConvInpaint-TSGL
-### [Paper]() | [BibTex](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#citation)
+### [Paper]() | [BibTex]()
 
 This repository is the official code for the paper "Thinking inside the Convolution for Image Inpainting: Reconstructing Texture via Structure under Global and Local Side" by Haipeng Liu (hpliu_hfut@hotmail.com), Yang Wang (corresponding author: yangwang@hfut.edu.cn), Biao Qian, Yong Rui, Meng Wang. 
 
 ## 📚 Table of Contents
 
-- [📖 Introduction](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-introduction)
+- [📖 Introduction]()
 - [🔧 TSGL (MEDFE)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsglmedfe-for-256--256)
 - [🔨 TSGL (LaMa)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsgllama-for-512--512)
 - [📊 Experimental Results](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-experimental-results)
-- [🔖 Citation](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-citation)
+- [🔖 Citation]()
 
 
 <details close>
@@ -218,6 +218,16 @@ This implementation is based on / inspired by:
 
 <details open>
 <summary><h1>📊 Experimental Results</h1></summary>
+
+* Ablation study about hyperparameter τ under varied mask ratios on PSV, Our method, i.e., τ = 100, achieves the best results.
+![](pic/tau.png)
+	
+* Ablation study about comparing the final inpainted results using various priors on ADE20K with irregular masks reveals that our **Edge map + Grayscale** approach yields the most desirable inpainting results compared to other methods.
+![](pic/prior.png)
+
+*  Ablation study about several priors as the structure information on ADE20K dataset. Our method, i.e., **Edge map + Grayscale**, achieves the best results (reported with boldface).
+![](pic/prior_table.png)
+
 
 </details>
 
