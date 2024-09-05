@@ -110,8 +110,6 @@ Python3 TSGL_MEDFE/train/run_train.py
 ### Pre-trained models
 * Download the pre-trained model
 	- [Places2](https://pan.baidu.com/s/18yHf01_hHI6Nu7BnlDSQ9w?pwd=6v9k)
-	- [CelebA](https://pan.baidu.com/s/18yHf01_hHI6Nu7BnlDSQ9w?pwd=6v9k)
-	- [PSV](https://pan.baidu.com/s/18yHf01_hHI6Nu7BnlDSQ9w?pwd=6v9k)
 * pre-trained model path
   https://github.com/htyjers/ConvInpaint-TSGL/blob/bb07abda12b364d6d0460d27e1cc78d29093233b/TSGL_MEDFE/test/test.py#L50
   
