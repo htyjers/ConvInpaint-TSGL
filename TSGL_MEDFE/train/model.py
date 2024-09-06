@@ -239,27 +239,27 @@ class Generator(BaseNetwork):
 
         ############## Fusion branch ##############
         self.en_fusion_1 = nn.Sequential(
-            nn.Conv2d(cnum + tdim, cnum, kernel_size=3, padding=1, bias=True),
+            nn.Conv2d(tdim, cnum, kernel_size=1, padding=0, bias=True),
             nn.ReLU(inplace=True)
         )
-        
+
         self.en_fusion_2 = nn.Sequential(
-            nn.Conv2d(cnum * 2  + tdim, cnum * 2, kernel_size=3, padding=1, bias=True),
+            nn.Conv2d(tdim, cnum * 2, kernel_size=1, padding=0, bias=True),
             nn.ReLU(inplace=True)
         )
-        
+
         self.en_fusion_3 = nn.Sequential(
-            nn.Conv2d(cnum * 4  + tdim, cnum * 4, kernel_size=3, padding=1, bias=True),
+            nn.Conv2d(tdim, cnum * 4, kernel_size=1, padding=0, bias=True),
             nn.ReLU(inplace=True)
         )
-        
+
         self.en_fusion_4 = nn.Sequential(
-            nn.Conv2d(cnum * 8  + tdim, cnum * 8, kernel_size=3, padding=1, bias=True),
+            nn.Conv2d(tdim, cnum * 8, kernel_size=1, padding=0, bias=True),
             nn.ReLU(inplace=True)
         )
-        
+
         self.en_fusion_5 = nn.Sequential(
-            nn.Conv2d(cnum * 16  + tdim, cnum * 8, kernel_size=3, padding = 1, bias=True),
+            nn.Conv2d(tdim, cnum * 8, kernel_size=1, padding = 0, bias=True),
             nn.ReLU(inplace=True)
         )
 
@@ -281,8 +281,6 @@ class Generator(BaseNetwork):
             nn.Conv2d(cnum * (8 + 8 + 4 + 2 + 1), cnum * (8), kernel_size=3, stride=2,padding = 1, bias=True),
             nn.ReLU(inplace=True)
         )
-        
-
         
         self.pc_block = PCconv()
         
@@ -323,13 +321,11 @@ class Generator(BaseNetwork):
         
         ############## Multi-frenquency branch ##############
         ## Layer 0
-        #'''
         B,_,_,_ = image.shape
-        layer_h0 = torch.cat((gray, mask, high), dim=1)
+        layer_h0 = torch.cat((high, gray, mask), dim=1)
         layer_h0_mask =  torch.cat((mask, mask, mask), dim=1)
-        layer_l0 = torch.cat((image, mask, low), dim=1)
+        layer_l0 = torch.cat((image, low, mask), dim=1)
         layer_l0_mask = mask
-#         print(layer_h0.shape,layer_l0.shape)
         
         ## Layer 1
         layer_h1,layer_h1_mask = self.en_high_1(layer_h0,layer_h0_mask)
@@ -338,6 +334,7 @@ class Generator(BaseNetwork):
         
         layer_l1_t3 = F.interpolate(layer_l1_t1 - self.up(layer_l1_t2), size=layer_h1.size()[2:4], mode='bilinear', align_corners=True)
         layer_l1 = self.h2l_1(layer_l1_t2, layer_l1_t3, layer_h1)
+
         ## Layer 2
         layer_h2,layer_h2_mask = self.en_high_2(layer_h1,layer_h1_mask)
         layer_l2_t1, layer_l2_size, layer_l2_mask = self.en_low_2(feature2token(layer_l1), layer_l1.size()[-2:], feature2token(layer_l1_mask))
@@ -373,12 +370,17 @@ class Generator(BaseNetwork):
         layer_l5 = self.h2l_5(layer_l5_t2, layer_l5_t3, layer_h5)
         
         ############## Fusion branch ##############
-        layer_f1 = self.en_fusion_1(torch.cat((layer_h1, layer_l1), dim=1)).reshape(B,-1,128,128)
-        layer_f2 = self.en_fusion_2(torch.cat((layer_h2, layer_l2), dim=1)).reshape(B,-1,64,64)
-        layer_f3 = self.en_fusion_3(torch.cat((layer_h3, layer_l3), dim=1)).reshape(B,-1,32,32)
-        layer_f4 = self.en_fusion_4(torch.cat((layer_h4, layer_l4), dim=1)).reshape(B,-1,16,16)
-        layer_f5 = self.en_fusion_5(torch.cat((layer_h5, layer_l5), dim=1)).reshape(B,-1,8,8) #
+        # layer_f1 = self.en_fusion_1(torch.cat((layer_h1, layer_l1), dim=1)).reshape(B,-1,128,128)
+        # layer_f2 = self.en_fusion_2(torch.cat((layer_h2, layer_l2), dim=1)).reshape(B,-1,64,64)
+        # layer_f3 = self.en_fusion_3(torch.cat((layer_h3, layer_l3), dim=1)).reshape(B,-1,32,32)
+        # layer_f4 = self.en_fusion_4(torch.cat((layer_h4, layer_l4), dim=1)).reshape(B,-1,16,16)
+        # layer_f5 = self.en_fusion_5(torch.cat((layer_h5, layer_l5), dim=1)).reshape(B,-1,8,8) #
 
+        layer_f1 = self.en_fusion_1(layer_l1).reshape(B,-1,128,128)
+        layer_f2 = self.en_fusion_2(layer_l2).reshape(B,-1,64,64)
+        layer_f3 = self.en_fusion_3(layer_l3).reshape(B,-1,32,32)
+        layer_f4 = self.en_fusion_4(layer_l4).reshape(B,-1,16,16)
+        layer_f5 = self.en_fusion_5(layer_l5).reshape(B,-1,8,8) #
         
         #################    #################    #################
         ##   Decoder   ##    ##   Decoder   ##    ##   Decoder   ##
@@ -391,8 +393,7 @@ class Generator(BaseNetwork):
         layer_f3_d = F.interpolate(layer_f3, scale_factor=1/4, mode='bilinear', align_corners=True)
         layer_f4_d = F.interpolate(layer_f4, scale_factor=1/2, mode='bilinear', align_corners=True)
         layer_f6 = self.en_fusion_6(torch.cat((layer_f1_d, layer_f2_d, layer_f3_d, layer_f4_d, layer_f5), dim=1))
-
-
+        
         #########################################################
         x_out = self.pc_block([layer_f1, layer_f2, layer_f3, layer_f4, layer_f5, layer_f6],1-mask)
         y_1 = self.Decoder_1(x_out[5])
@@ -401,6 +402,7 @@ class Generator(BaseNetwork):
         y_4 = self.Decoder_4(torch.cat([y_3, x_out[2]], 1))
         y_5 = self.Decoder_5(torch.cat([y_4, x_out[1]], 1))
         output = self.Decoder_6(torch.cat([y_5, x_out[0]], 1))
+
         #########################################################
         
         ############## High frequency branch -- CNN #############
@@ -415,6 +417,7 @@ class Generator(BaseNetwork):
         image_high = self.de_high_0(de_high)
 
         return output, image_high
+
 
 class Discriminator(BaseNetwork):
   def __init__(self, in_channels, use_sigmoid=False, use_sn=True, init_weights=True):
