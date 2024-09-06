@@ -76,7 +76,7 @@ class Trainer(object):
                     mask_iterator = iter(self.train_loader1)
                     mask = next(mask_iterator).to(self.args.device)
                 B,C,H,W = image.size()
-                output, image_high, image_low = self.netG(image * mask, high * mask, low * mask, gray * mask, mask)
+                output, image_high = self.netG(image * mask, high * mask, low * mask, gray * mask, mask)
                 
                 com_output = image * mask + output * (1 - mask)
                 
@@ -98,17 +98,13 @@ class Trainer(object):
                 gen_fake_feat = self.netD(com_output)
                 gen_fake_loss = self.adversarial_loss(gen_fake_feat, True, False) 
                 gen_loss = 0
-                imgae_loss = 10 * self.l1loss(output * (1 - mask), image * (1 - mask)) / torch.mean(1- mask) + 1 * self.l1loss(output * mask, image * mask) / torch.mean(mask) 
+                imgae_loss = (5 *self.l1loss(output * (1 - mask), image * (1 - mask)) +  self.l1loss(output * mask, image * mask)).mean()
+                high_loss = (5 *self.l1loss(image_high * (1 - mask), high * (1 - mask)) + self.l1loss(image_high * mask, high * mask)).mean()
                 
-                low_loss = 10 * self.l1loss(image_low * (1 - mask), low * (1 - mask)) / torch.mean(1-mask) + 1 * self.l1loss(image_low * mask, low * mask) / torch.mean(mask) 
-                high_loss = 10 * self.l1loss(image_high * (1 - mask), high * (1 - mask)) / torch.mean(1-mask) + 1 * self.l1loss(image_high * mask, high * mask) / torch.mean(mask) 
-                
-
                 gen_loss += gen_fake_loss * 0.1
                 gen_loss += imgae_loss
-                gen_loss += (low_loss + high_loss)
+                gen_loss += high_loss
 
-                print("[{}/{}] [{}/{}]: {} | {} | {}".format(epoch, self.args.max_epoch + 1, i, len(self.train_loader) ,gen_loss.data ,low_loss.data ,high_loss.data))
                 self.optimizer_g.zero_grad()
                 gen_loss.backward()
                 self.optimizer_g.step()
