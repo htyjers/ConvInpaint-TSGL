@@ -310,44 +310,6 @@ class Generator(BaseNetwork):
         self.de_high_1 = PConvBNActiv(cnum*2, cnum, activ='leaky')#256
         self.de_high_0 = Feature2High(cnum, cnum)
 
-        ############## Low frequency branch -- Transformer ##############
-        #U-net without skip connect
-
-        # 1.Body
-        # from 8 -> 16 -> 32 -> 64 -> 128
-        depths = [2, 2, 2, 2] # num of layer
-        ratios = [2, 2, 2, 2]
-        #tnum = [cnum*16, cnum*8, cnum*4, cnum*2, cnum] # channel
-        tnum = [tdim,tdim,tdim,tdim,tdim] # channel
-        num_heads = 4
-        window_sizes = [8, 8, 8, 8]
-        drop_path_rate = 0.1
-        dpr = [x.item() for x in torch.linspace(0, drop_path_rate, sum(depths))]
-
-        up4 = PatchUpsampling(tnum[0], tnum[1], up=ratios[0])
-        self.de_low_4 = BasicLayer(dim=tnum[1], input_resolution=[16, 16], depth=depths[0], num_heads=num_heads,
-                           window_size=window_sizes[0], drop_path=dpr[sum(depths[:0]):sum(depths[:1])],
-                           downsample=up4) #16
-
-        up3 = PatchUpsampling(tnum[1], tnum[2], up=ratios[1])
-        self.de_low_3 = BasicLayer(dim=tnum[2], input_resolution=[32, 32], depth=depths[1], num_heads=num_heads,
-                           window_size=window_sizes[1], drop_path=dpr[sum(depths[:1]):sum(depths[:2])],
-                           downsample=up3) #32
-
-        up2 = PatchUpsampling(tnum[2], tnum[3], up=ratios[2])
-        self.de_low_2 = BasicLayer(dim=tnum[3], input_resolution=[64, 64], depth=depths[2], num_heads=num_heads,
-                           window_size=window_sizes[2], drop_path=dpr[sum(depths[:2]):sum(depths[:3])],
-                           downsample=up2) #64
-
-        up1 = PatchUpsampling(tnum[3], tnum[4], up=ratios[3])
-        self.de_low_1 = BasicLayer(dim=tnum[4], input_resolution=[128, 128], depth=depths[3], num_heads=num_heads,
-                           window_size=window_sizes[3], drop_path=dpr[sum(depths[:3]):sum(depths[:4])],
-                           downsample=up1) #128
-
-        # 2.Tail
-        self.de_low_0 = DecTranBlock(tdim, tdim, activation, 3)
-
-
         self.up = nn.Upsample(scale_factor=2, mode='nearest')
         
         self.init_weights()
@@ -452,14 +414,7 @@ class Generator(BaseNetwork):
             de_high, de_high_masks = getattr(self, de_conv)(de_high, de_high_masks)
         image_high = self.de_high_0(de_high)
 
-        ############## Low frequency branch -- Transformer ##############
-        de_low, de_low_size, de_low_mask  = self.de_low_4(feature2token(layer_l5), layer_l5_size, None)
-        de_low, de_low_size, de_low_mask  = self.de_low_3(de_low, de_low_size, None)
-        de_low, de_low_size, de_low_mask  = self.de_low_2(de_low, de_low_size, None)
-        de_low, de_low_size, de_low_mask  = self.de_low_1(de_low, de_low_size, None)
-        de_low = token2feature(de_low, de_low_size).contiguous()
-        image_low  = self.de_low_0(de_low)
-        return output, image_high, image_low
+        return output, image_high
 
 class Discriminator(BaseNetwork):
   def __init__(self, in_channels, use_sigmoid=False, use_sn=True, init_weights=True):
