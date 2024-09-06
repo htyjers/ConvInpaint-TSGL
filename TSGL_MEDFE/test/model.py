@@ -11,34 +11,10 @@ from spade import SPADE
 import torch.nn as nn
 from torch.nn import init
 from pconv import PConvBNActiv
-from pcconv_cross import PCconv
 from trans import BasicLayer, PatchMerging, PatchUpsampling, token2feature, feature2token, Conv2dLayerPartial, DecTranBlock
 from spectral_norm import use_spectral_norm
-class UnetSkipConnectionDBlock(nn.Module):
-    def __init__(self, inner_nc, outer_nc, outermost=False, innermost=False, norm_layer=nn.BatchNorm2d,
-                 use_dropout=False):
-        super(UnetSkipConnectionDBlock, self).__init__()
-        uprelu = nn.ReLU(True)
-        upnorm = norm_layer(outer_nc, affine=True)
-        upconv = nn.ConvTranspose2d(inner_nc, outer_nc,
-                                    kernel_size=4, stride=2,
-                                    padding=1)
-        up = [uprelu, upconv, upnorm]
 
-        if outermost:
-            up = [uprelu, upconv, nn.Tanh()]
-            model = up
-        elif innermost:
-            up = [uprelu, upconv, upnorm]
-            model = up
-        else:
-            up = [uprelu, upconv, upnorm]
-            model = up
-
-        self.model = nn.Sequential(*model)
-
-    def forward(self, x):
-        return self.model(x)
+from pcconv_cross import PCconv
 class BaseNetwork(nn.Module):
     def __init__(self):
         super(BaseNetwork, self).__init__()
@@ -139,9 +115,8 @@ class Feature2High(nn.Module):
       
 
       
-
 class SPDNormResnetBlock(nn.Module):
-    def __init__(self, fin, fout, semantic_nc_low, semantic_nc_high, norm_G = 'spectralspadesyncbatch3x3'):
+    def __init__(self, fin, fout, semantic_nc_low, semantic_nc_high, norm_G = 'spectralspadesyncbatch3x3'):#spadeposition3x3
         super(SPDNormResnetBlock, self).__init__()
         # Attributes
         self.learned_shortcut = True
@@ -163,24 +138,21 @@ class SPDNormResnetBlock(nn.Module):
         self.norm_0 = SPADE(spade_config_str, fin, semantic_nc_high)
         self.norm_1 = SPADE(spade_config_str, fmiddle, semantic_nc_high)
         self.norm_s = SPADE('spadeposition3x3', fin, semantic_nc_low)
-    
+    # note the resnet block with SPADE also takes in |seg|,
+    # the semantic segmentation map as input
     def forward(self, x, seg1, seg2):
         # Residual low frequency--seg1
-        low1,gamma1,beta1,norm1 = self.norm_s(x, seg1)
-        low = self.conv_s(self.actvn(low1))
-        
+        low = self.conv_s(self.actvn(self.norm_s(x, seg1)))
         # High frquency--seg2
-        high1,gamma2,beta2,norm2 = self.norm_0(x, seg2)
-        high2 = self.conv_0(self.actvn(high1))
-        high3,gamma3,beta3,norm3 = self.norm_1(high2, seg2)
-        high = self.conv_1(self.actvn(high3))
-        
-        out = high + low
+        high = self.conv_0(self.actvn(self.norm_0(x, seg2)))
+        high = self.conv_1(self.actvn(self.norm_1(high, seg2)))
 
+        out = high + low
         return out
+
+
     def actvn(self, x):
         return F.leaky_relu(x, 2e-1)
-
 
 class UnetSkipConnectionDBlock(nn.Module):
     def __init__(self, inner_nc, outer_nc, outermost=False, innermost=False, norm_layer=nn.BatchNorm2d,
@@ -207,6 +179,7 @@ class UnetSkipConnectionDBlock(nn.Module):
 
     def forward(self, x):
         return self.model(x)
+    
 class Generator(BaseNetwork):
 
     def __init__(self,activation='lrelu'):
@@ -309,6 +282,7 @@ class Generator(BaseNetwork):
             nn.ReLU(inplace=True)
         )
         
+
         
         self.pc_block = PCconv()
         
@@ -336,44 +310,6 @@ class Generator(BaseNetwork):
         self.de_high_1 = PConvBNActiv(cnum*2, cnum, activ='leaky')#256
         self.de_high_0 = Feature2High(cnum, cnum)
 
-        ############## Low frequency branch -- Transformer ##############
-        #U-net without skip connect
-
-        # 1.Body
-        # from 8 -> 16 -> 32 -> 64 -> 128
-        depths = [2, 2, 2, 2] # num of layer
-        ratios = [2, 2, 2, 2]
-        #tnum = [cnum*16, cnum*8, cnum*4, cnum*2, cnum] # channel
-        tnum = [tdim,tdim,tdim,tdim,tdim] # channel
-        num_heads = 4
-        window_sizes = [8, 8, 8, 8]
-        drop_path_rate = 0.1
-        dpr = [x.item() for x in torch.linspace(0, drop_path_rate, sum(depths))]
-
-        up4 = PatchUpsampling(tnum[0], tnum[1], up=ratios[0])
-        self.de_low_4 = BasicLayer(dim=tnum[1], input_resolution=[16, 16], depth=depths[0], num_heads=num_heads,
-                           window_size=window_sizes[0], drop_path=dpr[sum(depths[:0]):sum(depths[:1])],
-                           downsample=up4) #16
-
-        up3 = PatchUpsampling(tnum[1], tnum[2], up=ratios[1])
-        self.de_low_3 = BasicLayer(dim=tnum[2], input_resolution=[32, 32], depth=depths[1], num_heads=num_heads,
-                           window_size=window_sizes[1], drop_path=dpr[sum(depths[:1]):sum(depths[:2])],
-                           downsample=up3) #32
-
-        up2 = PatchUpsampling(tnum[2], tnum[3], up=ratios[2])
-        self.de_low_2 = BasicLayer(dim=tnum[3], input_resolution=[64, 64], depth=depths[2], num_heads=num_heads,
-                           window_size=window_sizes[2], drop_path=dpr[sum(depths[:2]):sum(depths[:3])],
-                           downsample=up2) #64
-
-        up1 = PatchUpsampling(tnum[3], tnum[4], up=ratios[3])
-        self.de_low_1 = BasicLayer(dim=tnum[4], input_resolution=[128, 128], depth=depths[3], num_heads=num_heads,
-                           window_size=window_sizes[3], drop_path=dpr[sum(depths[:3]):sum(depths[:4])],
-                           downsample=up1) #128
-
-        # 2.Tail
-        self.de_low_0 = DecTranBlock(tdim, tdim, activation, 3)
-
-
         self.up = nn.Upsample(scale_factor=2, mode='nearest')
         
         self.init_weights()
@@ -387,6 +323,7 @@ class Generator(BaseNetwork):
         
         ############## Multi-frenquency branch ##############
         ## Layer 0
+        #'''
         B,_,_,_ = image.shape
         layer_h0 = torch.cat((gray, mask, high), dim=1)
         layer_h0_mask =  torch.cat((mask, mask, mask), dim=1)
@@ -400,15 +337,14 @@ class Generator(BaseNetwork):
         layer_l1_t2,layer_l1_mask = self.en_low_1_s(layer_l1_t1, layer_l1_mask)
         
         layer_l1_t3 = F.interpolate(layer_l1_t1 - self.up(layer_l1_t2), size=layer_h1.size()[2:4], mode='bilinear', align_corners=True)
-        layer_l1= self.h2l_1(layer_l1_t2, layer_l1_t3, layer_h1)
-
+        layer_l1 = self.h2l_1(layer_l1_t2, layer_l1_t3, layer_h1)
         ## Layer 2
         layer_h2,layer_h2_mask = self.en_high_2(layer_h1,layer_h1_mask)
         layer_l2_t1, layer_l2_size, layer_l2_mask = self.en_low_2(feature2token(layer_l1), layer_l1.size()[-2:], feature2token(layer_l1_mask))
         layer_l2_t2 = token2feature(layer_l2_t1, layer_l2_size).contiguous()
         
         layer_l2_t3 = F.interpolate(layer_l1 - self.up(layer_l2_t2), size=layer_h2.size()[2:4], mode='bilinear', align_corners=True)
-        layer_l2= self.h2l_2(layer_l2_t2, layer_l2_t3, layer_h2)
+        layer_l2 = self.h2l_2(layer_l2_t2, layer_l2_t3, layer_h2)
 
         ## Layer 3
         layer_h3,layer_h3_mask = self.en_high_3(layer_h2,layer_h2_mask)
@@ -435,8 +371,8 @@ class Generator(BaseNetwork):
         
         layer_l5_t3 = F.interpolate(layer_l4 - self.up(layer_l5_t2), size=layer_h5.size()[2:4], mode='bilinear', align_corners=True)
         layer_l5 = self.h2l_5(layer_l5_t2, layer_l5_t3, layer_h5)
-
-#         ############## Fusion branch ##############
+        
+        ############## Fusion branch ##############
         layer_f1 = self.en_fusion_1(torch.cat((layer_h1, layer_l1), dim=1)).reshape(B,-1,128,128)
         layer_f2 = self.en_fusion_2(torch.cat((layer_h2, layer_l2), dim=1)).reshape(B,-1,64,64)
         layer_f3 = self.en_fusion_3(torch.cat((layer_h3, layer_l3), dim=1)).reshape(B,-1,32,32)
@@ -455,8 +391,8 @@ class Generator(BaseNetwork):
         layer_f3_d = F.interpolate(layer_f3, scale_factor=1/4, mode='bilinear', align_corners=True)
         layer_f4_d = F.interpolate(layer_f4, scale_factor=1/2, mode='bilinear', align_corners=True)
         layer_f6 = self.en_fusion_6(torch.cat((layer_f1_d, layer_f2_d, layer_f3_d, layer_f4_d, layer_f5), dim=1))
-        
-    
+
+
         #########################################################
         x_out = self.pc_block([layer_f1, layer_f2, layer_f3, layer_f4, layer_f5, layer_f6],1-mask)
         y_1 = self.Decoder_1(x_out[5])
@@ -466,6 +402,7 @@ class Generator(BaseNetwork):
         y_5 = self.Decoder_5(torch.cat([y_4, x_out[1]], 1))
         output = self.Decoder_6(torch.cat([y_5, x_out[0]], 1))
         #########################################################
+
         return output
 
 class Discriminator(BaseNetwork):
