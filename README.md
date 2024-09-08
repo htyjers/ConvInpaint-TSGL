@@ -1,4 +1,4 @@
-# ConvInpaint-TSGL
+<img width="1068" alt="615cd4d8386953b06e77f4ab29b9051" src="https://github.com/user-attachments/assets/6519887a-ff7a-4ffe-92a0-191a657013e5"><img width="1068" alt="615cd4d8386953b06e77f4ab29b9051" src="https://github.com/user-attachments/assets/da421007-cc8e-49ce-b32d-3cefa221ad1d"># ConvInpaint-TSGL
 ### [Paper]() | [BibTex]()
 
 This repository is the official code for the paper "Thinking inside the Convolution for Image Inpainting: Reconstructing Texture via Structure under Global and Local Side" by Haipeng Liu (hpliu_hfut@hotmail.com), Yang Wang (corresponding author: yangwang@hfut.edu.cn), Biao Qian, Yong Rui, Meng Wang. 
@@ -109,7 +109,9 @@ Python3 TSGL_MEDFE/train/run_train.py
 
 ### Pre-trained models
 * Download the pre-trained model
-	- [Places2](https://pan.baidu.com/s/18yHf01_hHI6Nu7BnlDSQ9w?pwd=6v9k)
+  	- [PSV](https://pan.baidu.com/s/1WDqFzw5U70cIwFNilYbL3A?pwd=nbn5)
+  	- [CelebA](https://pan.baidu.com/s/1__w_oSrkofIAPN8Eq4fcyg?pwd=ks9u)
+  	- [Places2](https://pan.baidu.com/s/1__w_oSrkofIAPN8Eq4fcyg?pwd=ks9u)
 * pre-trained model path
   https://github.com/htyjers/ConvInpaint-TSGL/blob/bb07abda12b364d6d0460d27e1cc78d29093233b/TSGL_MEDFE/test/test.py#L50
   
@@ -197,7 +199,7 @@ Python3 TSGL_Lama/train/run_train.py
 
 ### Pre-trained model
 * Download the pre-trained model
-	- [Places2](https://pan.baidu.com/s/18yHf01_hHI6Nu7BnlDSQ9w?pwd=6v9k): Trained on Places365-Standard Test Dataset
+	- [Places2](https://pan.baidu.com/s/1rtLRhJ6qFlo_C73QX5cW_A?pwd=zqqw): Trained on Places365-Standard Test Dataset
 * pre-trained model path
 https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/test/test.py#L43
   
