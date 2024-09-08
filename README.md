@@ -1,4 +1,4 @@
-<img width="1068" alt="615cd4d8386953b06e77f4ab29b9051" src="https://github.com/user-attachments/assets/6519887a-ff7a-4ffe-92a0-191a657013e5"><img width="1068" alt="615cd4d8386953b06e77f4ab29b9051" src="https://github.com/user-attachments/assets/da421007-cc8e-49ce-b32d-3cefa221ad1d"># ConvInpaint-TSGL
+# ConvInpaint-TSGL
 ### [Paper]() | [BibTex]()
 
 This repository is the official code for the paper "Thinking inside the Convolution for Image Inpainting: Reconstructing Texture via Structure under Global and Local Side" by Haipeng Liu (hpliu_hfut@hotmail.com), Yang Wang (corresponding author: yangwang@hfut.edu.cn), Biao Qian, Yong Rui, Meng Wang. 
