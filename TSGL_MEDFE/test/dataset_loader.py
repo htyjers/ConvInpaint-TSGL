@@ -48,7 +48,18 @@ class DatasetLoader(Dataset):
 
 def define_transformer(image, low):
     transform_list = []
-    transform_list.append(transforms.Resize(size=(256, 256), interpolation=Image.NEAREST))
+    
+    w,h = image.size
+    x = random.randint(0, np.maximum(0, w - 256))
+    y = random.randint(0, np.maximum(0, h - 256))
+    crop = [x, y, 256, 256]
+    crop_position = crop[:2]  
+    crop_size = crop[2:]  
+    # For PSV and Places2
+    transform_list.append(transforms.Lambda(lambda img: __crop(img, crop_position, crop_size)))
+    # For Celeba 
+    transform_list.append(transforms.Resize(size=(256, 256), interpolation=Image.NEAREST))    
+    
     transform_list += [transforms.ToTensor()]
     transform_list += [transforms.Normalize((0.5, 0.5, 0.5),
                                                 (0.5, 0.5, 0.5))]
