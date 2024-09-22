@@ -39,7 +39,7 @@ For convenience, I wrote independent code for each model.
 Our model is trained on the three typical datasets: 
   * [Paris Street View](https://github.com/pathak22/context-encoder)
   * [CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)
-  * [Places2 (256 * 256)](http://places2.csail.mit.edu/)
+  * [Places2](http://places2.csail.mit.edu/)
 
 ### Structure Dataset -- [Edge Map]
 We employ the canny edge detector to construct the edge map and the grayscale counterpart. **The training and testing code already includes this part.**
@@ -92,8 +92,15 @@ Our model is trained on the irregular mask dataset provided by [PartialConv](htt
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/train/dataset_loader.py#L21-L23
 * Mask data path:
   https://github.com/htyjers/ConvInpaint-TSGL/blob/ce13c18b0580286b9db7e26317d92a3dc2a832f5/TSGL_MEDFE/train/run_train.py#L10
-  
-### Run the following command
+
+### Data Augmentation
+* For PSV and Places2
+https://github.com/htyjers/ConvInpaint-TSGL/blob/959b4fc13f33b61b74264878c3dc9ba88ff5f613/TSGL_MEDFE/train/dataset_loader.py#L53-L60
+
+* For CelebA
+https://github.com/htyjers/ConvInpaint-TSGL/blob/959b4fc13f33b61b74264878c3dc9ba88ff5f613/TSGL_MEDFE/train/dataset_loader.py#L61-L62
+
+### Run the following Command
 ```python
 Python3 TSGL_MEDFE/train/run_train.py
 ```
@@ -115,6 +122,14 @@ Python3 TSGL_MEDFE/train/run_train.py
 * pre-trained model path
   https://github.com/htyjers/ConvInpaint-TSGL/blob/bb07abda12b364d6d0460d27e1cc78d29093233b/TSGL_MEDFE/test/test.py#L50
   
+### Data Augmentation
+* For PSV and Places2
+https://github.com/htyjers/ConvInpaint-TSGL/blob/ded566e043444e25f3ba11540ffe6c8cec450ebf/TSGL_MEDFE/test/dataset_loader.py#L52-L59
+
+* For CelebA
+https://github.com/htyjers/ConvInpaint-TSGL/blob/ded566e043444e25f3ba11540ffe6c8cec450ebf/TSGL_MEDFE/test/dataset_loader.py#L60-L61
+
+   
 ### Run the following command
 ```python
 Python3 TSGL_MEDFE/test/run_train.py
@@ -129,7 +144,7 @@ This implementation is based on / inspired by:
 </details>
 
 <details open>
-<summary><h1>🔨 TSGL(LaMa) [For 512 * 512]</h1></summary>
+<summary><h1>🔨 TSGL(LaMa) [For 256 * 256 and 512 * 512]</h1></summary>
 For convenience, I wrote independent code for each model.
 	
 ## 1. Dependencies
@@ -147,7 +162,7 @@ For convenience, I wrote independent code for each model.
 ## 2. Dataset Preparation
 ### Image Dataset -- [RGB Image]
 Our model is trained on one dataset: 
-  * [Places2 (512 * 512)](http://places2.csail.mit.edu/)
+  * [Places2](http://places2.csail.mit.edu/)
 ### Structure Dataset -- [Edge Map]
 We employ the canny edge detector to construct the edge map and the grayscale counterpart. **The training and testing code already includes this part.**
   ```python
