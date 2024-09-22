@@ -56,9 +56,9 @@ def define_transformer(image, low):
     crop = [x, y, 256, 256]
     crop_position = crop[:2]  
     crop_size = crop[2:]  
-    # For PSV
+    # For PSV and Places2
     transform_list.append(transforms.Lambda(lambda img: __crop(img, crop_position, crop_size)))
-    # For Celeba and Places2
+    # For Celeba 
     transform_list.append(transforms.Resize(size=(256, 256), interpolation=Image.NEAREST))
     
     if random.random() > 0.5:
