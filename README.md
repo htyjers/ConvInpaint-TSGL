@@ -6,8 +6,8 @@ This repository is the official code for the paper "Thinking inside the Convolut
 ## 📚 Table of Contents
 
 - [📖 Introduction]()
-- [🔧 TSGL (MEDFE)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsglmedfe-for-256--256)
-- [🔨 TSGL (LaMa)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsgllama-for-512--512)
+- [🌟 TSGL (MEDFE)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsglmedfe-for-256--256)
+- [⭐️ TSGL (LaMa)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsgllama-for-512--512)
 - [📊 Experimental Results](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-experimental-results)
 - [🔖 Citation]()
 
@@ -19,7 +19,7 @@ This repository is the official code for the paper "Thinking inside the Convolut
 
 
 <details open>
-<summary><h1>🔧 TSGL(MEDFE) [For 256 * 256]</h1></summary>
+<summary><h1>🌟 TSGL(MEDFE) [256 * 256]</h1></summary>
 For convenience, I wrote independent code for each model.
 	
 ## 1. Dependencies
@@ -116,9 +116,9 @@ Python3 TSGL_MEDFE/train/run_train.py
 
 ### Pre-trained models
 * Download the pre-trained model
-  	- [PSV](https://pan.baidu.com/s/1WDqFzw5U70cIwFNilYbL3A?pwd=nbn5)
-  	- [CelebA](https://pan.baidu.com/s/1__w_oSrkofIAPN8Eq4fcyg?pwd=ks9u)
-  	- [Places2](https://pan.baidu.com/s/1__w_oSrkofIAPN8Eq4fcyg?pwd=ks9u)
+  	- [PSV](https://pan.baidu.com/s/1Qm1AGFHcWuE09NvusZfonA?pwd=feqj)
+  	- [CelebA](https://pan.baidu.com/s/1Qm1AGFHcWuE09NvusZfonA?pwd=feqj)
+  	- [Places2](https://pan.baidu.com/s/1Qm1AGFHcWuE09NvusZfonA?pwd=feqj)
 * pre-trained model path
   https://github.com/htyjers/ConvInpaint-TSGL/blob/bb07abda12b364d6d0460d27e1cc78d29093233b/TSGL_MEDFE/test/test.py#L50
   
@@ -144,7 +144,7 @@ This implementation is based on / inspired by:
 </details>
 
 <details open>
-<summary><h1>🔨 TSGL(LaMa) [For 256 * 256 and 512 * 512]</h1></summary>
+<summary><h1>⭐️ TSGL(LaMa) [512 * 512]</h1></summary>
 For convenience, I wrote independent code for each model.
 	
 ## 1. Dependencies
@@ -214,7 +214,7 @@ Python3 TSGL_Lama/train/run_train.py
 
 ### Pre-trained model
 * Download the pre-trained model
-	- [Places2](https://pan.baidu.com/s/1rtLRhJ6qFlo_C73QX5cW_A?pwd=zqqw): Trained on Places365-Standard Test Dataset
+	- [Places2](https://pan.baidu.com/s/1Qm1AGFHcWuE09NvusZfonA?pwd=feqj): Trained on Places365-Standard Test Dataset
 * pre-trained model path
 https://github.com/htyjers/ConvInpaint-TSGL/blob/788a382c97274f7ae7609742018e0b904eb2933e/TSGL_Lama/test/test.py#L43
   
