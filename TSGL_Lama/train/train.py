@@ -95,7 +95,7 @@ class Trainer(object):
                 
                 # Generator Loss
                 high_loss = (10 * self.l1loss(image_high * mask, high * mask) + self.l1loss(image_high * (1 - mask), high * (1 - mask))).mean()
-                imgae_loss = (10 * self.l1loss(output * mask, image * mask)).mean()
+                imgae_loss = (10 * self.l1loss(output * mask, image * mask) + self.l1loss(output * (1 - mask), image * (1 - mask))).mean()
                 pcp_loss = self.loss_resnet_pl(output, image) * 10
                 fm_loss = feature_matching_loss(gen_feats, real_feats, mask=None) * 200
                 adv_gen_loss = generator_loss(discr_fake_pred=gen_dis, mask=1-mask)
