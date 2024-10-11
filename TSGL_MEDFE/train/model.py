@@ -208,7 +208,7 @@ class Generator(BaseNetwork):
         
         #2. Body
         # from 128 -> 64 -> 32 -> 16 -> 8
-        depths = [2, 2, 6, 2] # num of layer
+        depths = [2, 2, 6, 6] # num of layer
         ratios = [1/2, 1/2, 1/2, 1/2]
         #tnum = [cnum, cnum*2, cnum*4, cnum*8, cnum*16] # channel
         tnum = [tdim,tdim,tdim,tdim,tdim] # channel
