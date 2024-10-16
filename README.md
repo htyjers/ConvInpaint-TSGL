@@ -6,8 +6,8 @@ This repository is the official code for the paper "Thinking inside the Convolut
 ## 📚 Table of Contents
 
 - [📖 Introduction]()
-- [🌟 TSGL (MEDFE)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsglmedfe-for-256--256)
-- [⭐️ TSGL (LaMa)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsgllama-for-512--512)
+- [🌟 TSGL(MEDFE)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsglmedfe-for-256--256)
+- [⭐️ TSGL(LaMa)](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-tsgllama-for-512--512)
 - [📊 Experimental Results](https://github.com/htyjers/ConvInpaint-TSGL?tab=readme-ov-file#-experimental-results)
 - [🔖 Citation]()
 
@@ -19,7 +19,7 @@ This repository is the official code for the paper "Thinking inside the Convolut
 
 
 <details open>
-<summary><h1>🌟 TSGL(MEDFE) [256 * 256]</h1></summary>
+<summary><h1>🌟 TSGL(MEDFE)</h1></summary>
 For convenience, I wrote independent code for each model.
 	
 ## 1. Dependencies
@@ -144,7 +144,7 @@ This implementation is based on / inspired by:
 </details>
 
 <details open>
-<summary><h1>⭐️ TSGL(LaMa) [512 * 512]</h1></summary>
+<summary><h1>⭐️ TSGL(LaMa)</h1></summary>
 For convenience, I wrote independent code for each model.
 	
 ## 1. Dependencies
