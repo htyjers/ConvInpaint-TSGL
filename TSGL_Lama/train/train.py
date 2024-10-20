@@ -85,41 +85,36 @@ class Trainer(object):
                 #'''
                 B,C,H,W = image.size()
                 
-                self.optimizer_g.zero_grad()
 
                 output,image_high= self.netG(image * mask, high * mask, gray * mask, 1-mask) #
                 com_output = image * mask + output * (1 - mask)
-                gen_dis, gen_feats = self.netD(output)
-                real_dis, real_feats = self.netD(image)
 
                 
                 # Generator Loss
-                high_loss = (10 * self.l1loss(image_high * mask, high * mask) + self.l1loss(image_high * (1 - mask), high * (1 - mask))).mean()
-                imgae_loss = (10 * self.l1loss(output * mask, image * mask) + self.l1loss(output * (1 - mask), image * (1 - mask))).mean()
-                pcp_loss = self.loss_resnet_pl(output, image) * 10
-                fm_loss = feature_matching_loss(gen_feats, real_feats, mask=None) * 200
+                self.optimizer_g.zero_grad()
+                gen_dis, gen_feats = self.netD(output)
+                real_dis, real_feats = self.netD(image)
+                high_loss = (10 * self.l1loss(image_high * mask, high * mask)).mean()
+                imgae_loss = (10 * self.l1loss(output * mask, image * mask)).mean()
+                pcp_loss = self.loss_resnet_pl(com_output, image) * 30
+                fm_loss = feature_matching_loss(gen_feats, real_feats, mask=None) * 100
                 adv_gen_loss = generator_loss(discr_fake_pred=gen_dis, mask=1-mask)
-                gen_loss = imgae_loss + pcp_loss + fm_loss + adv_gen_loss + high_loss# + low_loss
+                gen_loss = imgae_loss + pcp_loss + fm_loss + adv_gen_loss + high_loss
                 gen_loss.mean().backward()
-
                 self.optimizer_g.step()
 
                 # Discriminator loss
                 self.optimizer_d.zero_grad()
-
                 real_img_tmp = image.detach().requires_grad_(True)
                 real_logits, _ = self.netD(real_img_tmp)
-                gen_logits, _ = self.netD(output.detach())
+                gen_logits, _ = self.netD(com_output.detach())
                 dis_real_loss, grad_penalty = discriminator_real_loss(real_batch=real_img_tmp, discr_real_pred=real_logits,
                                                                       gp_coef=0.001, do_GP=True)
                 dis_fake_loss = discriminator_fake_loss(discr_fake_pred=gen_logits, mask=1-mask)
                 dis_loss = dis_real_loss + dis_fake_loss + grad_penalty
-
                 dis_loss.mean().backward()
-
                 self.optimizer_d.step()
-                print("[{}/{}] [{}/{}]: {} | {} | {} | {} | {} -- {}".format(epoch, self.args.max_epoch + 1, i, len(self.train_loader) ,imgae_loss.data ,pcp_loss.data ,fm_loss.data ,adv_gen_loss.data ,high_loss.data,gen_loss.data))#
-                    
+                
                 
                 with torch.no_grad():
                     if i%200==0:
@@ -129,7 +124,7 @@ class Trainer(object):
                             os.makedirs(os.path.join(self.save_path,'{}'.format(epoch//100)))
                     
                         vis = torch.cat((output,com_output,image)).detach().cpu()
-                        vis = make_grid(vis, nrow = B//2, padding = 5, normalize = False)
+                        vis = make_grid(vis, nrow = B//2, padding = 5, normalize = True)
                         vis = T.ToPILImage()(vis)
                         vis.save(os.path.join(self.save_path,'{}/a_{}.jpg'.format(epoch//100,i)))
                     
